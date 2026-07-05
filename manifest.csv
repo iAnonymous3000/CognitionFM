@@ -1,6 +1,6 @@
-rendered,recipe,seed,duration,engine_version,lufs_target,artifact,status
-2026-07-05,deep-work-verbal,42,10m,0.1.0,-23,deep-work-verbal-10m-seed42.wav,local-test
-2026-07-05,deep-work-analytical,42,3m,0.1.0,-20,deep-work-analytical-3m-seed42.wav,local-test
-2026-07-05,downshift,42,3m,0.1.0,-24,downshift-3m-seed42.wav,local-test
-2026-07-05,sleep-wind-down,42,3m,0.1.0,-28,sleep-wind-down-3m-seed42.wav,local-test
-2026-07-05,morning-ramp-up,42,2m,0.1.0,-19,morning-ramp-up-2m-seed42.wav,local-test
+rendered,recipe,seed,duration,engine_version,engine_commit,lufs_target,sha256,artifact,url,status
+2026-07-05,deep-work-verbal,42,10m,0.1.0,b585403,-23,9ea50212867f86f9476d85803399e0cdb60063ab41de9468c752b3352d0a995f,deep-work-verbal-10m-seed42.wav,,local-test
+2026-07-05,deep-work-analytical,42,3m,0.1.0,b585403,-20,a596cfa8370b04c505ec75d1fc1eaa8b499211aabf42bfa9fbcc157f94af6dd8,deep-work-analytical-3m-seed42.wav,,local-test
+2026-07-05,downshift,42,3m,0.1.0,b585403,-24,25c559fb3eb0c4a4ae0906bbf6f3d350e390689c8f9920847fc23ecd59ec9118,downshift-3m-seed42.wav,,local-test
+2026-07-05,sleep-wind-down,42,3m,0.1.0,b585403,-28,bfc8b61bc40c68afb85321bd2154a9c9603f59334537402a92365eddc9eed953,sleep-wind-down-3m-seed42.wav,,local-test
+2026-07-05,morning-ramp-up,42,2m,0.1.0,b585403,-19,0f6256401522ebe332efc02e596957c365edfb3154d20e4de079d2225f3d1732,morning-ramp-up-2m-seed42.wav,,local-test
