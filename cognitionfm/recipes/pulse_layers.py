@@ -1,8 +1,8 @@
 """`pulse_layers` generator: machine-steady soft pulse + bass + slow pads.
 
-For Deep Work — Analytical (docs/02-playlists.md #2): a predictable pulse is
+For Deep Work - Analytical (docs/02-playlists.md #2): a predictable pulse is
 tolerated at lower verbal load and helps time-on-task feel. Predictability is
-the point — no swing, no fills, no surprises. Percussive attacks are soft
+the point - no swing, no fills, no surprises. Percussive attacks are soft
 ("thump", not "snare"); the recipe's attack floor applies to sustained layers
 only.
 """

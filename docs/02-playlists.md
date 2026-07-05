@@ -5,13 +5,13 @@ Ten playlists, one clear job each. Every design rule traces to a verdict in
 
 Two kinds of spec:
 
-- **[ENGINE]** — rendered by the CognitionFM generative engine (`recipes/*.yaml`
-  implements the parameter block). These are also the YouTube channel formats.
-- **[PERSONAL]** — built from commercial streaming music for personal use. The engine
+- **[ENGINE]** - rendered by the CognitionFM generative engine (`recipes/*.yaml`
+  implements the parameter block). These are also the publishable mix formats.
+- **[PERSONAL]** - built from commercial streaming music for personal use. The engine
   can't fake vocals or your personal history with a song, and shouldn't try.
 
 Global rules (all playlists):
-- **Volume:** background music means background — just above audibility for work
+- **Volume:** background music means background - just above audibility for work
   playlists. Salience scales distraction (§1.3).
 - **Familiarity:** work playlists should be *familiar* (novelty captures attention,
   §1.2); emotional and creative playlists can afford novelty.
@@ -20,15 +20,17 @@ Global rules (all playlists):
 
 ---
 
-## 1. Deep Work — Verbal [ENGINE] — writing, reading, hard debugging
+## 1. Deep Work - Verbal [ENGINE] - writing, reading, hard debugging
 
-The strictest spec. Verbal working memory must be protected (§1.2, §2.1).
+The strictest spec. Verbal working memory must be protected: unpredictable sound
+and lyrics disrupt it even when ignored (Salamé & Baddeley 1982; Perham & Currie
+2014; §1.2, §2.1).
 
 - No lyrics, no vocal samples, ever
 - High self-similarity: slow harmonic drift, no dramatic melodic contour
 - Attack times ≥ 150 ms (no percussive transients)
 - Narrow dynamic range; no section that makes you look up
-- Honest alternative: silence or broadband noise may beat it for you — test (§3.5)
+- Honest alternative: silence or broadband noise may beat it for you - test (§3.5)
 
 ```yaml
 # recipe parameters
@@ -43,14 +45,15 @@ lufs_target: -23
 
 **[PERSONAL] equivalents / search terms:** "ambient drone," "textural ambient," Stars
 of the Lid, Eluvium, Brian Eno's ambient series, Max Richter's quieter work, "deep
-focus instrumental." Avoid "epic study music" — cinematic dynamics violate the spec.
+focus instrumental." Avoid "epic study music" - cinematic dynamics violate the spec.
 
-## 2. Deep Work — Analytical [ENGINE] — routine coding, math, spreadsheets
+## 2. Deep Work - Analytical [ENGINE] - routine coding, math, spreadsheets
 
-Lower verbal load tolerates a steady pulse; the pulse aids time-on-task feel
-(§2.2 — extrapolated, flagged as such).
+Lower verbal load tolerates a steady pulse; the pulse aids time-on-task feel.
+Evidence status: extrapolated from the task-complexity findings (Gonzalez &
+Aiello 2019, *JEP: Applied*); there is no strong coding-specific literature (§2.2).
 
-- Steady 95–115 BPM pulse, soft-attack percussion only
+- Steady 95-115 BPM pulse, soft-attack percussion only
 - Instrumental, repetitive 8/16-bar cycles, gradual filter evolution
 - Switch to Playlist 1 (or silence) when reading unfamiliar code
 
@@ -67,9 +70,11 @@ lufs_target: -20
 **[PERSONAL] equivalents:** minimal techno (Kompakt label), dub techno, Tycho,
 Bonobo instrumentals, "minimal techno focus," "dub techno mix."
 
-## 3. Admin / Shallow Work [PERSONAL] — email, chores, expense reports
+## 3. Admin / Shallow Work [PERSONAL] - email, chores, expense reports
 
-The one work context where stimulating music with lyrics is evidence-aligned (§2.3).
+The one work context where stimulating music with lyrics is evidence-aligned:
+salient music helps simple, boring tasks (Gonzalez & Aiello 2019; Kämpfe et al.
+2011; §2.3).
 
 - Upbeat, familiar favorites; lyrics welcome
 - Choose energy just above the task's boredom level
@@ -77,19 +82,22 @@ The one work context where stimulating music with lyrics is evidence-aligned (§
 
 ## 4. Creative / Diffuse Thinking [PERSONAL, ENGINE-assisted]
 
-Mood scaffolding around ideation, not during verbal drafting (§2.4 — mixed evidence,
-honest framing).
+Mood scaffolding around ideation, not during verbal drafting. Evidence status:
+mixed; background music has even *impaired* verbal insight problem-solving
+(Threadgold et al. 2019, *Applied Cognitive Psychology*; §2.4).
 
 - Moderately novel instrumental music between thinking bouts; anything goes on breaks
 - During actual verbal ideation: drop to Playlist 1 rules or silence
 - Search terms: "modern classical," "fourth world," "jazz ambient," Jon Hassell,
   Alice Coltrane, Floating Points.
 
-## 5. Downshift — Stress Reduction [ENGINE]
+## 5. Downshift - Stress Reduction [ENGINE]
 
-The strongest clinical literature (§2.5): slow, predictable, low-dynamic music.
+The strongest clinical literature: slow, predictable, low-dynamic music reduces
+physiological and psychological stress (de Witte et al. 2020 meta-analyses,
+*Health Psychology Review*; §2.5).
 
-- ~60–80 BPM felt motion, descending energy arc across 20–30 min
+- ~60-80 BPM felt motion, descending energy arc across 20-30 min
 - Warm consonance, no surprises, generous reverb tails
 
 ```yaml
@@ -107,32 +115,38 @@ Hiroshi Yoshimura, "60 bpm relaxation instrumental."
 
 ## 6. Emotional Processing [PERSONAL]
 
-Deliberate, time-boxed listening — never background (§2.6).
+Deliberate, time-boxed listening - never background. Sad music reliably provides
+consolation and emotion regulation for many listeners, moderated by empathy and
+rumination tendency (Taruffi & Koelsch 2014, *PLOS ONE*; §2.6).
 
 - Your music, your lyrics, your history; nostalgia does most of the work
-- 20–40 minute sessions with a defined end; if you tend to ruminate, pair with
+- 20-40 minute sessions with a defined end; if you tend to ruminate, pair with
   journaling or a walk, and stop if mood sinks instead of settles
-- No search terms needed — you already know these songs.
-- **Anger variant (§2.10):** when furious, *match* the arousal — your own
-  aggressive/high-energy music — rather than forcing calm; shift toward
-  Downshift only after the edge drops (the music-therapy "iso principle").
+- No search terms needed - you already know these songs.
+- **Anger variant:** when furious, *match* the arousal - your own
+  aggressive/high-energy music - rather than forcing calm; shift toward
+  Downshift only after the edge drops (the music-therapy "iso principle";
+  Sharman & Dingle 2015, small n=39 study, moderate evidence; §2.10).
 
 ## 7. Walk / Recover [PERSONAL]
 
-The best-supported positive effect in the whole literature (§2.7).
+The best-supported positive effect in the whole literature: better affect,
+performance, and lower perceived exertion across 139 studies (Terry,
+Karageorghis et al. 2020 meta-analysis, *Psychological Bulletin*; §2.7).
 
-- Fast (115–140 BPM), personally motivational, familiar vocal music
+- Fast (115-140 BPM), personally motivational, familiar vocal music
 - Save absolute favorites for the hardest part of the walk/workout
 - Search terms: "running 120-140 bpm," your high-energy favorites.
 
 ## 8. Sleep Wind-Down [ENGINE]
 
-Routine + relaxation, honestly framed (§2.8): part of a consistent pre-bed sequence,
-not an all-night stream.
+Routine + relaxation, honestly framed: music improves subjective sleep quality in
+insomnia with moderate-certainty evidence (Jespersen et al. 2022 Cochrane review;
+§2.8). Part of a consistent pre-bed sequence, not an all-night stream.
 
-- 30–45 min, played at the same point in the wind-down every night, low volume
+- 30-45 min, played at the same point in the wind-down every night, low volume
 - Slowest attack times in the system; energy arc falls to near-silence
-- No claims about sleep stages — the Cochrane-supported outcome is subjective
+- No claims about sleep stages - the Cochrane-supported outcome is subjective
   sleep quality
 
 ```yaml
@@ -146,15 +160,17 @@ lufs_target: -28          # markedly quiet; player volume low too
 ```
 
 **[PERSONAL] equivalents:** "sleep ambient no melody," Green-House, Grouper's quieter
-side, "drone sleep music" (skip anything labeled with Hz claims — see §3.2).
+side, "drone sleep music" (skip anything labeled with Hz claims - see §3.2).
 
 ## 9. Mood Lift [PERSONAL]
 
-Deliberate short-term mood raising (§2.9) — the evidence needs *both* halves:
-upbeat music **and** the intention to feel better; passive play doesn't move mood.
+Deliberate short-term mood raising. The evidence needs *both* halves: upbeat
+music **and** the intention to feel better; passive play didn't move mood
+(Ferguson & Sheldon 2013, two experiments; moderate evidence for lasting
+effects; §2.9).
 
-- 15–25 min of genuinely upbeat music you love; use it on purpose ("I'm putting
-  this on to shift gears"), then get on with the day — don't keep polling your mood
+- 15-25 min of genuinely upbeat music you love; use it on purpose ("I'm putting
+  this on to shift gears"), then get on with the day - don't keep polling your mood
 - Major-key, energetic, familiar; lyrics fine; great before social things or
   after a slump
 - Search terms: your own feel-good history first; "good mood classics,"
@@ -162,17 +178,18 @@ upbeat music **and** the intention to feel better; passive play doesn't move moo
 
 ## 10. Intimacy [PERSONAL]
 
-Requested use case; honest evidence status: thin (§2.11 — one lab mechanism,
-excitation transfer, plus conditioning and self-consciousness masking; no
-validated genre/tempo prescription and absolutely no "aphrodisiac frequency").
+Honest evidence status: thin and this doc says so. One lab-demonstrated mechanism,
+excitation transfer (Marin et al. 2017, *PLOS ONE*), plus conditioning and
+self-consciousness masking; no validated genre/tempo prescription and absolutely
+no "aphrodisiac frequency" (§2.11).
 
 - **Shared history beats acoustics**: music tied to your relationship outperforms
   any generic "sensual" playlist on the conditioning mechanism
-- Otherwise: moderate arousal without attention capture — smooth timbres, warm
+- Otherwise: moderate arousal without attention capture - smooth timbres, warm
   bass, steady slow-to-mid grooves, no jarring transitions, no comedy shuffles;
   vocals fine, skip anything lyrically distracting or associated with other contexts
 - Long enough not to think about it (60+ min), volume low; gapless > shuffle
-- Search terms: "slow jams," "bedroom R&B," trip-hop, "late night soul" — as
+- Search terms: "slow jams," "bedroom R&B," trip-hop, "late night soul" - as
   *starting points for taste*, not prescriptions
 - Stays personal-use and **off-channel**: publishing this under CognitionFM would
   dilute the focus/recovery brand, and generative synthesis is weakest exactly

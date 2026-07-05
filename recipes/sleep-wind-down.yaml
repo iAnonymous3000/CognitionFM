@@ -4,7 +4,7 @@ name: sleep-wind-down
 generator: ambient_layers
 
 mode: ionian
-root_midi: 43         # G2 — lowest register in the system
+root_midi: 43         # G2 - lowest register in the system
 register: [43, 64]
 chord_duration_s: [40, 65]
 attack_floor_s: 5.0            # slowest onsets in the system
@@ -23,7 +23,7 @@ lufs_target: -28      # markedly quiet by design; keep player volume low too
 truepeak_max_dbtp: -3.0
 
 notes:
-  - Part of a wind-down routine - same time every night is what the trials support
+  - A wind-down routine, same time nightly (Jespersen et al. 2022, Cochrane review)
   - Fades to near-silence by design - not an 8-hour loop
   - The slowest onsets in the system - nothing reads as an event
   - No delta waves, no sleep frequencies - just quiet, predictable sound

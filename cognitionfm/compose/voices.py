@@ -82,7 +82,7 @@ def pad_voice(rng: np.random.Generator, duration: float, root_midi: int, mode: s
 def shimmer_voice(rng: np.random.Generator, duration: float, root_midi: int, mode: str,
                   register: tuple[int, int], amp: float,
                   mean_interval_s: float = 22.0) -> list[Event]:
-    """Rare, quiet, high single tones — texture sparkle, kept below salience."""
+    """Rare, quiet, high single tones - texture sparkle, kept below salience."""
     pitches = scale_pitches(root_midi, mode, *register)
     events = []
     t = rng.exponential(mean_interval_s)

@@ -3,7 +3,7 @@
 Same seed -> same art as the mix it accompanies (provenance made visible).
 Aesthetic follows the audio rules: slow smooth fields, one accent color per
 series, nothing busy. Each video gets materially distinct art, which also
-serves YouTube's inauthentic-content policy (docs/04-publishing-plan.md).
+satisfies platform originality policies (docs/04-publishing-plan.md).
 """
 
 import os
@@ -13,8 +13,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 # accent per series (R, G, B); background stays near-black
 SERIES = {
-    "deep-work-verbal":     {"accent": (96, 148, 210), "title": "Deep Work — Verbal"},
-    "deep-work-analytical": {"accent": (108, 190, 170), "title": "Deep Work — Analytical"},
+    "deep-work-verbal":     {"accent": (96, 148, 210), "title": "Deep Work - Verbal"},
+    "deep-work-analytical": {"accent": (108, 190, 170), "title": "Deep Work - Analytical"},
     "downshift":            {"accent": (196, 150, 110), "title": "Downshift"},
     "sleep-wind-down":      {"accent": (110, 105, 165), "title": "Sleep Wind-Down"},
     "morning-ramp-up":      {"accent": (222, 186, 100), "title": "Morning Ramp-Up"},
@@ -94,7 +94,7 @@ def generate_art(recipe_name: str, seed: int, out_path: str,
 def generate_video_frames(recipe_name: str, seed: int, notes: list[str], out_dir: str,
                           size: tuple[int, int] = (1920, 1080)) -> list[str]:
     """One frame per note: base art + a caption top-left. The video pipeline
-    cycles these — the 'why it sounds like this' rotation is baked into pixels
+    cycles these - the 'why it sounds like this' rotation is baked into pixels
     (PIL typography; no dependence on ffmpeg's optional drawtext filter)."""
     w, h = size
     base = _render_base(recipe_name, seed, size)

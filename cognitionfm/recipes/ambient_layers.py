@@ -1,6 +1,6 @@
 """`ambient_layers` generator: drone + voice-led pads + sparse shimmer.
 
-Covers the unpulsed recipes (Deep Work — Verbal, Downshift, Sleep Wind-Down);
+Covers the unpulsed recipes (Deep Work - Verbal, Downshift, Sleep Wind-Down);
 the YAML decides register, speed, arc, and layer levels.
 """
 
@@ -60,7 +60,7 @@ def generate(cfg: dict, duration: float, seed: int) -> list[Event]:
         ev.dur = min(ev.dur, MAX_EVENT_S)
         ev.attack_s = max(ev.attack_s, attack_floor)
         ev.amp *= arc(ev.t)
-        # brightness drifts over minutes, deterministically — the only "motion"
+        # brightness drifts over minutes, deterministically - the only "motion"
         drift = slow_drift(ev.t, seed=seed + 101)
         ev.params["lp_cutoff"] = lp["base"] * 2.0 ** (lp["drift_octaves"] * drift)
         out.append(ev)

@@ -1,7 +1,7 @@
-"""Assemble a YouTube-ready mp4: cover image (or flat color) + rendered audio.
+"""Assemble a distribution-ready mp4: cover image (or flat color) + rendered audio.
 
-Still image at 2 fps keeps files small; h264/yuv420p + AAC is what YouTube
-recommends for maximum compatibility.
+Still image at 2 fps keeps files small; h264/yuv420p + AAC gives the broadest
+player and platform compatibility.
 """
 
 import os

@@ -1,4 +1,4 @@
-"""CognitionFM — generative functional music engine.
+"""CognitionFM - generative functional music engine.
 
 Renders original, fully-owned long-form audio from evidence-derived recipes.
 See docs/01-evidence-review.md for the research each recipe parameter traces to.

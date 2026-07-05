@@ -20,7 +20,7 @@ def partial_stack(
     """Sum of detuned sine partials with random phases.
 
     `partials` is a list of (ratio, amplitude). With `pairs=True` each partial
-    is doubled at ±detune for slow chorus beating — the only motion allowed in
+    is doubled at ±detune for slow chorus beating - the only motion allowed in
     low-variability recipes.
     """
     t = np.arange(n, dtype=np.float64) / sr

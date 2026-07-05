@@ -1,4 +1,4 @@
-"""Envelopes. Raised-cosine segments only — no discontinuities anywhere.
+"""Envelopes. Raised-cosine segments only - no discontinuities anywhere.
 
 The attack-time floor in each recipe exists because sharp onsets are
 changing-state events that capture attention (evidence review §1.2).

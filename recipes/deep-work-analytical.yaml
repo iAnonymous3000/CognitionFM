@@ -1,4 +1,4 @@
-# Deep Work — Analytical. Spec: docs/02-playlists.md #2; evidence: docs/01-evidence-review.md §2.2
+# Deep Work - Analytical. Spec: docs/02-playlists.md #2; evidence: docs/01-evidence-review.md §2.2
 # Steady predictable pulse for lower-verbal-load flow work. No swing, no fills.
 name: deep-work-analytical
 generator: pulse_layers
@@ -25,5 +25,5 @@ truepeak_max_dbtp: -2.0
 notes:
   - One steady tempo, locked for the whole mix - predictability is the point
   - Soft-attack pulse only - no snares, no fills, no surprises
-  - For routine flow work - switch to ambient or silence for hard reading
+  - For routine flow work - complex tasks favor quiet (Gonzalez & Aiello 2019)
   - Works for many people, not everyone - test it against silence

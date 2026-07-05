@@ -34,7 +34,7 @@ def main(argv=None):
 
     sub.add_parser("recipes", help="list available recipes")
 
-    v = sub.add_parser("video", help="wrap a rendered WAV into a YouTube-ready mp4")
+    v = sub.add_parser("video", help="wrap a rendered WAV into a distribution-ready mp4")
     v.add_argument("--audio", required=True)
     v.add_argument("--out", default=None)
     v.add_argument("--image", default=None, help="cover image (PNG/JPG); flat color if omitted")

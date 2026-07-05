@@ -1,4 +1,4 @@
-# Downshift — stress reduction. Spec: docs/02-playlists.md #5; evidence: docs/01-evidence-review.md §2.5
+# Downshift - stress reduction. Spec: docs/02-playlists.md #5; evidence: docs/01-evidence-review.md §2.5
 # Slow felt motion, warm consonance, descending energy arc across the render.
 name: downshift
 generator: ambient_layers
@@ -23,7 +23,7 @@ lufs_target: -24
 truepeak_max_dbtp: -2.0
 
 notes:
-  - Slow, predictable, low-dynamics - the ingredients stress trials keep finding
+  - Slow, predictable, low-dynamics - what stress trials find (de Witte et al. 2020)
   - Energy falls across the mix - designed to downregulate, not entertain
   - One 25-minute session, not all-day background
   - No healing frequencies here - the evidence says the number doesn't matter
