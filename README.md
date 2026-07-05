@@ -60,18 +60,19 @@ place where every public claim is checkable.
 .venv/bin/python -m http.server 8137 --directory site   # preview locally
 ```
 
-Deploy (Cloudflare Pages, recommended - no git required, unlimited bandwidth,
-repo can stay private):
+Deploy (Cloudflare Pages, git-connected): the generated HTML is intentionally
+not committed, so Pages builds it on every push to `main`. Project settings:
 
-```bash
-npx wrangler login                                  # once
-npx wrangler pages deploy site/ --project-name cognitionfm
-```
+- Framework preset: **None**
+- Build command: `python3 -m pip install markdown && python3 site/build.py`
+- Build output directory: `site`
 
-GitHub Pages also works (push repo → Settings → Pages → serve `site/`), but the
-free tier requires a public repo. Any static host is fine - the output is
-self-contained. Add every published render to `manifest.csv` and rebuild; the
-ledger page is the ownership record.
+Pushes to `main` rebuild and deploy automatically; other branches get preview
+deployments. One-off alternative without git:
+`npx wrangler pages deploy site/ --project-name cognitionfm` after a local
+build. Any static host works - the output is self-contained. Add every
+published render to `manifest.csv` and push; the ledger page is the ownership
+record.
 
 ## How the engine works
 
