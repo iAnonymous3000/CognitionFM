@@ -169,13 +169,16 @@ def build_provenance() -> str:
     )
     return f"""
 <h1>Provenance</h1>
-<p class="lead">Every published CognitionFM artifact is listed here with everything
-needed to regenerate it bit-for-bit: recipe, seed, duration, and engine version.</p>
+<p class="lead">Every CognitionFM artifact is listed here with everything needed
+to regenerate and verify it: recipe, seed, duration, engine version and commit,
+and the SHA-256 checksum of the exact file.</p>
 <p>Renders are deterministic. <code>python -m cognitionfm render --recipe
 &lt;recipe&gt; --duration &lt;duration&gt; --seed &lt;seed&gt;</code> at the listed
-engine version reproduces the exact audio, and cover art derives from the same seed.
-This ledger is the ownership record: nothing published samples, remixes, or
-launders anyone else's work.</p>
+engine commit reproduces the byte-identical audio (compare with
+<code>shasum -a 256</code>), and cover art derives from the same seed. This ledger
+is the ownership record: nothing published samples, remixes, or launders anyone
+else's work. Status is <code>local-test</code> until an artifact is actually
+published, at which point its public URL is added.</p>
 <table><thead><tr>{header}</tr></thead><tbody>{body}</tbody></table>
 """
 

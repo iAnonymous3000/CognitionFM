@@ -26,6 +26,7 @@ from .recipes import GENERATORS
 SR = 48_000
 CHUNK_S = 10.0
 CARRY_TAIL_S = 95.0  # > ambient_layers.MAX_EVENT_S; events must fit entirely
+MIN_RENDER_S = 30.0  # below this, LUFS integration and the slow textures are meaningless
 
 # timbre -> (partials [(ratio, amp)], detune_cents)
 PATCHES = {
@@ -43,7 +44,10 @@ def parse_duration(text: str) -> float:
     if not m or not any(m.groups()):
         raise ValueError(f"unparseable duration: {text!r}")
     h, mi, s = (int(g) if g else 0 for g in m.groups())
-    return float(h * 3600 + mi * 60 + s)
+    total = float(h * 3600 + mi * 60 + s)
+    if total <= 0:
+        raise ValueError(f"duration must be positive, got {text!r}")
+    return total
 
 
 def synth_event(ev: Event, idx: int, seed: int, sr: int) -> np.ndarray:
@@ -96,6 +100,10 @@ def iter_chunks(cfg: dict, duration_s: float, seed: int):
 
 def render(recipe_path: str, duration_s: float, seed: int, out_path: str,
            verbose: bool = True) -> dict:
+    if duration_s < MIN_RENDER_S:
+        raise ValueError(
+            f"duration must be >= {MIN_RENDER_S:.0f}s (got {duration_s:.0f}s): "
+            "loudness normalization needs integration time")
     with open(recipe_path) as f:
         cfg = yaml.safe_load(f)
 
@@ -119,6 +127,9 @@ def render(recipe_path: str, duration_s: float, seed: int, out_path: str,
                     print(f"  rendered {pos / SR:6.0f}s / {duration_s:.0f}s", flush=True)
 
         lufs = meter.integrated()
+        if not np.isfinite(lufs):
+            raise RuntimeError(
+                "render measured no signal (-inf LUFS); recipe layer amps may be zero")
         stats = finalize_file(
             raw_path, out_path,
             measured_lufs=lufs, measured_tp_db=tp_max,

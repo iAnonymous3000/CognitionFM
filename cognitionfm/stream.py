@@ -24,12 +24,21 @@ def _calibrate_gain_db(cfg: dict, seed: int, sample_s: float = 120.0) -> float:
     meter = LufsMeter(SR)
     for chunk in iter_chunks(cfg, sample_s, seed):
         meter.add(chunk)
-    return cfg.get("lufs_target", -20.0) - meter.integrated()
+    measured = meter.integrated()
+    if not np.isfinite(measured):
+        raise RuntimeError(
+            "calibration measured no signal (-inf LUFS); recipe layer amps may be zero")
+    return cfg.get("lufs_target", -20.0) - measured
 
 
 def _endless_chunks(cfg: dict, seed0: int, segment_s: float, crossfade_s: float):
     """Yield chunks forever: each segment gets seed0+k, and segment boundaries
     are raised-cosine crossfades so the join is inaudible."""
+    if segment_s < 2 * crossfade_s:
+        # the first-buffer wait below needs 2*crossfade of audio per segment;
+        # shorter segments would buffer forever and never yield
+        raise ValueError(
+            f"segment ({segment_s:.0f}s) must be >= 2x crossfade ({crossfade_s:.0f}s)")
     xf_n = int(crossfade_s * SR)
     fade_in = (0.5 - 0.5 * np.cos(np.pi * np.arange(xf_n) / xf_n))[:, None]
     fade_out = fade_in[::-1]
@@ -58,6 +67,9 @@ def _endless_chunks(cfg: dict, seed0: int, segment_s: float, crossfade_s: float)
 
 def stream(recipe_path: str, url: str, seed0: int = 1, segment_s: float = 1800.0,
            crossfade_s: float = 8.0, max_duration_s: float | None = None) -> None:
+    if segment_s < 4 * crossfade_s:
+        crossfade_s = segment_s / 4.0
+        print(f"note: crossfade clamped to {crossfade_s:.1f}s (segment is {segment_s:.0f}s)")
     with open(recipe_path) as f:
         cfg = yaml.safe_load(f)
     name = os.path.splitext(os.path.basename(recipe_path))[0]
@@ -76,7 +88,10 @@ def stream(recipe_path: str, url: str, seed0: int = 1, segment_s: float = 1800.0
         "-c:v", "libx264", "-preset", "veryfast", "-tune", "stillimage",
         "-pix_fmt", "yuv420p", "-r", "2", "-g", "4",  # keyframe every 2s (ingest requirement)
         "-c:a", "aac", "-b:a", "128k", "-ar", str(SR),
-        "-shortest",
+        # capped runs use -t on both streams; -shortest would race the eagerly
+        # encoded image loop against the paced audio pipe and cut the mux early.
+        # endless runs use -shortest so output stops soon after stdin closes.
+        *(["-t", f"{max_duration_s:.3f}"] if max_duration_s else ["-shortest"]),
         *(["-f", "flv"] if is_rtmp else []),
         url,
     ]

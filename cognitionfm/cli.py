@@ -55,6 +55,13 @@ def main(argv=None):
     s.add_argument("--max-duration", default=None, help="stop after this long (testing); endless if omitted")
 
     args = ap.parse_args(argv)
+    try:
+        _dispatch(args)
+    except (ValueError, RuntimeError) as e:
+        sys.exit(f"error: {e}")
+
+
+def _dispatch(args):
     if args.cmd == "recipes":
         for p in sorted(glob.glob(os.path.join(RECIPES_DIR, "*.yaml"))):
             print(os.path.splitext(os.path.basename(p))[0])

@@ -1,7 +1,8 @@
 # Distribution Plan
 
-Everything published is 100% engine-rendered original audio: fully owned, no
-copyright exposure, monetizable wherever monetization exists. The distribution
+Everything published is 100% engine-rendered original audio: fully owned, with
+no sampled or licensed source material anywhere in the pipeline, so copyright
+risk is minimal and monetization is unencumbered. The distribution
 platform is deliberately undecided; this plan is written platform-neutral so the
 choice (long-form video platform, live stream, podcast feed, direct hosting, or
 a mix) can be made late. The differentiator everywhere is honesty: the credible
@@ -22,8 +23,9 @@ Two constraints hold on any major platform and shape everything below:
      document originality.
    - Quality cadence over volume. One or two strong releases per week beats
      daily near-duplicates.
-2. **Provenance.** `manifest.csv` records recipe, seed, and engine version for
-   every published artifact. Identical inputs regenerate identical audio, which
+2. **Provenance.** `manifest.csv` records recipe, seed, engine version and git
+   commit, plus a SHA-256 checksum and publication status for every artifact.
+   Identical inputs regenerate byte-identical audio (verified in practice), which
    is both our reproducibility promise and our ownership evidence if a dispute
    ever arises.
 
@@ -98,8 +100,7 @@ Our positioning:
   artists without publishing terms; we publish the manifest, the recipes, and
   the seed for every published minute.
 - **The stream never loops.** `python -m cognitionfm stream` generates endless,
-  never-repeating audio, which is structurally impossible for a licensed-playlist
-  channel.
+  never-repeating audio, something a fixed licensed playlist cannot offer.
 
 ## Implemented capabilities
 

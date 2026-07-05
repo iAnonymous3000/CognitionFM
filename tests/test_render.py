@@ -38,10 +38,10 @@ def test_event_generation_deterministic():
 
 def test_render_smoke(tmp_path):
     out = str(tmp_path / "smoke.wav")
-    stats = render(RECIPES[0], duration_s=20.0, seed=3, out_path=out, verbose=False)
+    stats = render(RECIPES[0], duration_s=30.0, seed=3, out_path=out, verbose=False)
     x, sr = sf.read(out, always_2d=True)
     assert sr == 48_000
-    assert x.shape[0] == 20 * sr
+    assert x.shape[0] == 30 * sr
     assert np.abs(x).max() <= 0.999  # never clips
     assert np.abs(x).max() > 0.001   # not silence
     assert not os.path.exists(stats["out_path"] + ".raw.wav")  # temp cleaned up
