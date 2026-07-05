@@ -1,0 +1,29 @@
+# Morning Ramp-Up — the ascending mirror of sleep-wind-down.
+# Evidence: arousal-mood mechanism (docs/01-evidence-review.md §1.1, §2.9) — the goal
+# is a gentle arousal ramp into the day, not an alarm clock. Modest claim, honest label.
+name: morning-ramp-up
+generator: ambient_layers
+
+mode: lydian
+root_midi: 52         # E3 — brighter center than the sleep recipe
+register: [52, 79]
+chord_duration_s: [20, 35]   # faster harmonic rhythm than deep-work
+attack_floor_s: 1.0
+arc: ascending        # ~40% energy at start, full by the last quarter
+
+layers:
+  drone:   {amp: 0.12, event_dur_s: 50}
+  pad:     {amp: 0.11, voices: 4}
+  shimmer: {amp: 0.07, mean_interval_s: 14, register: [79, 95]}
+
+lp_cutoff_hz: {base: 2600, drift_octaves: 0.8}
+
+reverb: {t60_s: 5.0, wet: 0.35, damp_hz: 4000, predelay_ms: 15}
+
+lufs_target: -19      # the loudest ambient recipe — this one is allowed presence
+truepeak_max_dbtp: -2.0
+
+notes:
+  - Ascending energy arc - starts soft, ends bright and awake
+  - Built on the arousal-mood mechanism, not any special frequency
+  - 20-30 minutes pairs well with a morning routine

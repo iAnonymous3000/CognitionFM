@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cognitionfm"
+version = "0.1.0"
+description = "Evidence-aware generative functional music engine: original long-form audio for focus, stress downshift, and sleep"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "soundfile>=0.12",
+    "PyYAML>=6.0",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "markdown>=3.5",
+]
+
+[project.scripts]
+cognitionfm = "cognitionfm.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["cognitionfm"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

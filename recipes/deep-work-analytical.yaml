@@ -1,0 +1,29 @@
+# Deep Work — Analytical. Spec: docs/02-playlists.md #2; evidence: docs/01-evidence-review.md §2.2
+# Steady predictable pulse for lower-verbal-load flow work. No swing, no fills.
+name: deep-work-analytical
+generator: pulse_layers
+
+mode: dorian
+root_midi: 45         # A2-rooted; dub-techno register
+register: [57, 76]
+tempo_bpm: [98, 110]  # one tempo drawn per seed, then locked for the whole render
+chord_duration_s: [40, 70]
+attack_floor_s: 1.5   # sustained layers only; the pulse has its own soft attack
+
+layers:
+  pulse: {amp: 0.20}
+  bass:  {amp: 0.13}
+  pad:   {amp: 0.07, voices: 3}
+
+lp_cutoff_hz: {base: 1400, drift_octaves: 0.6}
+
+reverb: {t60_s: 4.0, wet: 0.30, damp_hz: 2400, predelay_ms: 15}
+
+lufs_target: -20
+truepeak_max_dbtp: -2.0
+
+notes:
+  - One steady tempo, locked for the whole mix - predictability is the point
+  - Soft-attack pulse only - no snares, no fills, no surprises
+  - For routine flow work - switch to ambient or silence for hard reading
+  - Works for many people, not everyone - test it against silence

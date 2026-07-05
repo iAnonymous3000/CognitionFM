@@ -1,0 +1,29 @@
+# Downshift — stress reduction. Spec: docs/02-playlists.md #5; evidence: docs/01-evidence-review.md §2.5
+# Slow felt motion, warm consonance, descending energy arc across the render.
+name: downshift
+generator: ambient_layers
+
+mode: ionian
+root_midi: 48         # C3
+register: [48, 72]
+chord_duration_s: [30, 50]
+attack_floor_s: 3.0
+arc: descending       # intensity falls ~65% over the render (de Witte-style downregulation)
+
+layers:
+  drone:   {amp: 0.16, event_dur_s: 70}
+  pad:     {amp: 0.11, voices: 4}
+  shimmer: {amp: 0.03, mean_interval_s: 35, register: [76, 86]}
+
+lp_cutoff_hz: {base: 1200, drift_octaves: 0.5}
+
+reverb: {t60_s: 8.0, wet: 0.5, damp_hz: 2600, predelay_ms: 25}
+
+lufs_target: -24
+truepeak_max_dbtp: -2.0
+
+notes:
+  - Slow, predictable, low-dynamics - the ingredients stress trials keep finding
+  - Energy falls across the mix - designed to downregulate, not entertain
+  - One 25-minute session, not all-day background
+  - No healing frequencies here - the evidence says the number doesn't matter

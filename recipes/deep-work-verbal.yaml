@@ -1,0 +1,29 @@
+# Deep Work — Verbal. Spec: docs/02-playlists.md #1; evidence: docs/01-evidence-review.md §1.2, §2.1
+# Design goal: protect verbal working memory. No pulse, no melody, no surprises.
+name: deep-work-verbal
+generator: ambient_layers
+
+mode: lydian          # consonant, low-tension (§1.2: harmonic surprise = attention capture)
+root_midi: 50         # D3 pads; drone sits an octave below (D2)
+register: [50, 76]
+chord_duration_s: [25, 45]   # very slow harmonic rhythm -> high self-similarity
+attack_floor_s: 2.0          # no onset ever reads as an "event"
+arc: flat                    # steady state for steady work
+
+layers:
+  drone:   {amp: 0.14, event_dur_s: 60}
+  pad:     {amp: 0.10, voices: 4}
+  shimmer: {amp: 0.045, mean_interval_s: 24, register: [79, 91]}
+
+lp_cutoff_hz: {base: 1800, drift_octaves: 0.7}  # brightness drifts over minutes, nothing faster
+
+reverb: {t60_s: 7.0, wet: 0.45, damp_hz: 3200, predelay_ms: 20}
+
+lufs_target: -23      # background means background (§1.3: salience scales distraction)
+truepeak_max_dbtp: -2.0
+
+notes:
+  - No lyrics or sharp onsets - unpredictable sound disrupts verbal working memory
+  - Slow chord drift, no melody - background music should stay background
+  - Mastered quiet on purpose - louder music distracts more on complex tasks
+  - Works for many people, not everyone - test it against silence

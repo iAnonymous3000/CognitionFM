@@ -1,0 +1,6 @@
+rendered,recipe,seed,duration,engine_version,lufs_target,artifact,status
+2026-07-05,deep-work-verbal,42,10m,0.1.0,-23,deep-work-verbal-10m-seed42.wav,local-test
+2026-07-05,deep-work-analytical,42,3m,0.1.0,-20,deep-work-analytical-3m-seed42.wav,local-test
+2026-07-05,downshift,42,3m,0.1.0,-24,downshift-3m-seed42.wav,local-test
+2026-07-05,sleep-wind-down,42,3m,0.1.0,-28,sleep-wind-down-3m-seed42.wav,local-test
+2026-07-05,morning-ramp-up,42,2m,0.1.0,-19,morning-ramp-up-2m-seed42.wav,local-test

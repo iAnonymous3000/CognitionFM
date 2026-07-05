@@ -1,0 +1,29 @@
+# Sleep Wind-Down. Spec: docs/02-playlists.md #8; evidence: docs/01-evidence-review.md §2.8
+# Part of a consistent pre-bed routine, not an all-night stream. Ends near silence.
+name: sleep-wind-down
+generator: ambient_layers
+
+mode: ionian
+root_midi: 43         # G2 — lowest register in the system
+register: [43, 64]
+chord_duration_s: [40, 65]
+attack_floor_s: 5.0            # slowest onsets in the system
+arc: descending_to_silence     # energy decays ~92% by the end
+
+layers:
+  drone: {amp: 0.18, event_dur_s: 80}
+  pad:   {amp: 0.10, voices: 3}
+  # no shimmer: nothing that could read as an event
+
+lp_cutoff_hz: {base: 800, drift_octaves: 0.4}
+
+reverb: {t60_s: 9.0, wet: 0.55, damp_hz: 1800, predelay_ms: 30}
+
+lufs_target: -28      # markedly quiet by design; keep player volume low too
+truepeak_max_dbtp: -3.0
+
+notes:
+  - Part of a wind-down routine - same time every night is what the trials support
+  - Fades to near-silence by design - not an 8-hour loop
+  - The slowest onsets in the system - nothing reads as an event
+  - No delta waves, no sleep frequencies - just quiet, predictable sound

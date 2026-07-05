@@ -1,0 +1,18 @@
+# environments & caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.DS_Store
+
+# local tool config
+.claude/
+
+# generated artifacts (reproducible from recipes + seeds; see manifest.csv)
+renders/
+art/
+site/*.html
+
+# personal data
+logs/
