@@ -9,3 +9,4 @@ rendered,recipe,seed,duration,engine_version,engine_commit,lufs_target,sha256,ar
 2026-07-05,downshift,42,90s,0.1.0,b585403,-24,a04c016952b27b1be2c125a20cadd9d7544384d516141ccdf7ffc7510197f9ef,audio/downshift-seed42-90s.m4a,https://cognitionfm.pages.dev/audio/downshift-seed42-90s.m4a,site-preview
 2026-07-05,sleep-wind-down,42,90s,0.1.0,b585403,-28,e6b2f131d7ecdc36b02ea50236833b5dd1660674c513e4477dd7713500a25277,audio/sleep-wind-down-seed42-90s.m4a,https://cognitionfm.pages.dev/audio/sleep-wind-down-seed42-90s.m4a,site-preview
 2026-07-05,morning-ramp-up,42,90s,0.1.0,b585403,-19,b644e845ac60ded4b004db81da0813a88e9a028064ac949b622e99e23e5dbf26,audio/morning-ramp-up-seed42-90s.m4a,https://cognitionfm.pages.dev/audio/morning-ramp-up-seed42-90s.m4a,site-preview
+2026-07-05,deep-work-verbal,42,1h,0.1.0,ab96a68,-23,dba37ec4553df0aef6c00bbd4c3bb2b9543f369ac10972425377355f1ccef3dd,deep-work-verbal-1h-seed42.wav,,release-candidate
