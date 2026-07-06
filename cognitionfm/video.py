@@ -21,13 +21,24 @@ def _write_concat_list(frames: list[str], tmpdir: str, cycle_s: float = 25.0) ->
     return path
 
 
+def _run(cmd: list[str]) -> str:
+    """Run ffmpeg/ffprobe; on failure raise RuntimeError carrying the tool's
+    stderr tail (the CLI turns RuntimeError into a clean error message)."""
+    try:
+        proc = subprocess.run(cmd, check=True, capture_output=True, text=True)
+    except FileNotFoundError:
+        raise RuntimeError(
+            f"{cmd[0]} not found - install ffmpeg (brew install ffmpeg)") from None
+    except subprocess.CalledProcessError as e:
+        tail = "\n".join(e.stderr.strip().splitlines()[-4:])
+        raise RuntimeError(f"{cmd[0]} failed:\n{tail}") from None
+    return proc.stdout
+
+
 def _audio_duration_s(path: str) -> float:
-    out = subprocess.run(
+    return float(_run(
         ["ffprobe", "-v", "error", "-show_entries", "format=duration",
-         "-of", "csv=p=0", path],
-        check=True, capture_output=True, text=True,
-    )
-    return float(out.stdout.strip())
+         "-of", "csv=p=0", path]).strip())
 
 
 def assemble_video(audio_path: str, out_path: str, image_path: str | None = None,
@@ -55,5 +66,5 @@ def assemble_video(audio_path: str, out_path: str, image_path: str | None = None
             "-c:a", "aac", "-b:a", "192k",
             "-t", f"{duration:.3f}", out_path,
         ]
-        subprocess.run(cmd, check=True, capture_output=True)
+        _run(cmd)
     return os.path.abspath(out_path)

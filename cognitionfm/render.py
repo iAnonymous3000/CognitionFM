@@ -13,7 +13,7 @@ import numpy as np
 import soundfile as sf
 import yaml
 
-from .compose.events import Event
+from .compose.events import MAX_EVENT_S, Event
 from .dsp.env import asr_envelope
 from .dsp.filters import one_pole_lowpass
 from .dsp.osc import partial_stack
@@ -25,7 +25,7 @@ from .recipes import GENERATORS
 
 SR = 48_000
 CHUNK_S = 10.0
-CARRY_TAIL_S = 95.0  # > ambient_layers.MAX_EVENT_S; events must fit entirely
+CARRY_TAIL_S = MAX_EVENT_S + 5.0  # events must fit entirely in the carry buffer
 MIN_RENDER_S = 30.0  # below this, LUFS integration and the slow textures are meaningless
 
 # timbre -> (partials [(ratio, amp)], detune_cents)
@@ -64,10 +64,12 @@ def synth_event(ev: Event, idx: int, seed: int, sr: int) -> np.ndarray:
     return equal_power_pan(x, ev.pan)
 
 
-def iter_chunks(cfg: dict, duration_s: float, seed: int):
+def iter_chunks(cfg: dict, duration_s: float, seed: int,
+                events: list[Event] | None = None):
     """Yield post-reverb float64 stereo chunks for a recipe. Shared by the
     file renderer and the live stream; both stay constant-memory."""
-    events = GENERATORS[cfg["generator"]](cfg, duration_s, seed)
+    if events is None:
+        events = GENERATORS[cfg["generator"]](cfg, duration_s, seed)
     rv = cfg.get("reverb", {})
     ir = synth_impulse_response(
         SR, t60_s=rv.get("t60_s", 7.0), damp_hz=rv.get("damp_hz", 3200.0),
@@ -109,7 +111,7 @@ def render(recipe_path: str, duration_s: float, seed: int, out_path: str,
 
     meter = LufsMeter(SR)
     tp_max = float("-inf")
-    n_events = len(GENERATORS[cfg["generator"]](cfg, duration_s, seed))
+    events = GENERATORS[cfg["generator"]](cfg, duration_s, seed)
 
     os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
     raw_fd, raw_path = tempfile.mkstemp(suffix=".raw.wav",
@@ -118,7 +120,7 @@ def render(recipe_path: str, duration_s: float, seed: int, out_path: str,
     try:
         with sf.SoundFile(raw_path, "w", samplerate=SR, channels=2, subtype="FLOAT") as raw:
             pos = 0
-            for out in iter_chunks(cfg, duration_s, seed):
+            for out in iter_chunks(cfg, duration_s, seed, events):
                 meter.add(out)
                 tp_max = max(tp_max, true_peak_db(out))
                 raw.write(out.astype(np.float32))
@@ -143,7 +145,7 @@ def render(recipe_path: str, duration_s: float, seed: int, out_path: str,
     stats.update({
         "recipe": cfg.get("name", os.path.basename(recipe_path)),
         "duration_s": duration_s, "seed": seed,
-        "events": n_events, "raw_lufs": round(lufs, 2),
+        "events": len(events), "raw_lufs": round(lufs, 2),
         "out_path": os.path.abspath(out_path),
     })
     if verbose:

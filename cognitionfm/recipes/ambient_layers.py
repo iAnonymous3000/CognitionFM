@@ -6,12 +6,10 @@ the YAML decides register, speed, arc, and layer levels.
 
 import numpy as np
 
-from ..compose.events import Event
+from ..compose.events import MAX_EVENT_S, Event
 from ..compose.theory import midi_to_hz
 from ..compose.voices import drone_voice, pad_voice, shimmer_voice
 from ..dsp.mod import slow_drift
-
-MAX_EVENT_S = 90.0  # render.py's carry buffer assumes no event outlives this
 
 
 def _arc_fn(kind: str, duration: float):

@@ -16,7 +16,7 @@ evidence is weak, the docs say so.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install numpy scipy soundfile pyyaml pillow pytest
+.venv/bin/pip install -e ".[dev]"   # engine + pytest + markdown (site build)
 
 # list recipes
 .venv/bin/python -m cognitionfm recipes
@@ -89,20 +89,28 @@ event list (drone / voice-led pads / shimmer, or pulse / bass / pad); events are
 synthesized as detuned partial stacks, mixed through a streaming convolution
 reverb, metered to BS.1770 LUFS, true-peak-limited, and written as 24-bit WAV.
 Renders stream in constant memory (3-hour mixes are fine) and are bit-identical
-per seed - every published mix is reproducible from `(recipe, seed, version)`.
+per seed on a given platform - every published mix is reproducible from
+`(recipe, seed, version)`. (Floating-point rounding can shift the checksum on
+different hardware or library versions without audibly changing the mix.)
 
 ```
 cognitionfm/
-  dsp/       oscillators, envelopes, filters, slow modulation
-  fx/        convolution reverb (synthetic IR), stereo tools
-  compose/   scales, chord graph, voice-leading, event voices
-  recipes/   generators: ambient_layers, pulse_layers
-  master/    BS.1770 loudness, true peak, normalize/finalize
-  render.py  chunked streaming pipeline
-  video.py   ffmpeg assembly (audio + cover -> mp4)
-recipes/     evidence-derived YAML parameter files
-docs/        the four documents above
-tests/       DSP correctness, loudness reference tones, streaming equivalence
+  dsp/          oscillators, envelopes, filters, slow modulation
+  fx/           convolution reverb (synthetic IR), stereo tools
+  compose/      scales, chord graph, voice-leading, event voices
+  recipes/      generators: ambient_layers, pulse_layers
+  master/       BS.1770 loudness, true peak, normalize/finalize
+  render.py     chunked streaming pipeline
+  video.py      ffmpeg assembly (audio + cover -> mp4)
+  stream.py     endless generative stream (crossfaded segments -> RTMP)
+  art.py        seed-linked cover art + caption frames
+  chapters.py   chapter marks derived from the harmonic walk
+  sessionlog.py listening-protocol CSV logger
+  cli.py        render / recipes / video / art / stream / play / log / chapters
+recipes/        evidence-derived YAML parameter files
+docs/           the four documents above
+site/           static trust-anchor site (build.py renders docs + manifest)
+tests/          DSP correctness, loudness reference tones, streaming equivalence
 ```
 
 ## Status
@@ -113,6 +121,8 @@ tests/       DSP correctness, loudness reference tones, streaming equivalence
 - [x] Morning ramp-up recipe (ascending arc)
 - [x] Seed-linked cover art + rotating evidence captions in videos
 - [x] Endless generative stream mode (needs an RTMP ingest URL to go live)
+- [x] Listening-protocol tools: `play`, `log`, `chapters`
+- [x] Public trust-anchor site with 90-second previews and the provenance ledger
 - [ ] Listening iteration on sound design (ongoing - ears beat metrics)
 - [ ] Personal playlist A/B tests (docs/03) and first uploads
-- [ ] Distribution hooks: play command / web player; public provenance page
+- [ ] Platform choice, first uploads, full-length mix hosting (R2 or equivalent)

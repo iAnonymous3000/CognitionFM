@@ -9,12 +9,11 @@ only.
 
 import numpy as np
 
-from ..compose.events import Event
-from ..compose.theory import midi_to_hz, triad_pitch_classes, walk_chords, scale_pitches
+from ..compose.events import MAX_EVENT_S, Event
+from ..compose.theory import SCALES, midi_to_hz, walk_chords, scale_pitches
 from ..compose.voices import pad_voice
 from ..dsp.mod import slow_drift
 
-MAX_EVENT_S = 90.0
 SUSTAINED = {"pad", "drone", "shimmer"}
 
 
@@ -42,7 +41,7 @@ def generate(cfg: dict, duration: float, seed: int) -> list[Event]:
                 events.append(Event(
                     t=t + beat / 2.0, dur=0.25, freq=midi_to_hz(root_midi + 7),
                     amp=p["amp"] * 0.25, pan=rng.uniform(-0.3, 0.3),
-                    timbre="tock", attack_s=0.02, release_s=0.18,
+                    timbre="tock", attack_s=0.03, release_s=0.18,
                 ))
 
     # Bass: root notes following a chord walk, two bars per note.
@@ -54,8 +53,8 @@ def generate(cfg: dict, duration: float, seed: int) -> list[Event]:
         chords = walk_chords(rng, n_notes)
         low = scale_pitches(root_midi - 12, mode, root_midi - 17, root_midi - 5)
         for i, degree in enumerate(chords):
-            pcs = triad_pitch_classes(root_midi, mode, degree)
-            roots = [q for q in low if q % 12 in pcs]
+            root_pc = (root_midi + SCALES[mode][degree]) % 12
+            roots = [q for q in low if q % 12 == root_pc]
             pitch = roots[0] if roots else root_midi - 12
             events.append(Event(
                 t=i * note_dur, dur=note_dur * 0.95, freq=midi_to_hz(pitch),

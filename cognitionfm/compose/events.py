@@ -1,5 +1,9 @@
 from dataclasses import dataclass, field
 
+# Ceiling on Event.dur, enforced by every generator; render.py sizes its carry
+# buffer against this so an event always fits entirely within one buffer.
+MAX_EVENT_S = 90.0
+
 
 @dataclass
 class Event:

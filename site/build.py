@@ -65,6 +65,14 @@ KEY_SOURCES = [
 ]
 
 
+DESCRIPTION = ("Original generative audio for focus, stress downshift, and sleep. "
+               "Every design decision cited to peer-reviewed research; weak evidence "
+               "flagged as weak.")
+FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' "
+           "viewBox='0 0 16 16'><rect width='16' height='16' rx='3' "
+           "fill='%230d0f13'/><circle cx='8' cy='8' r='4.5' fill='%236094d2'/></svg>")
+
+
 def page(slug: str, title: str, body: str) -> str:
     nav = "".join(
         f'<a href="{s}.html" class="{"brand" if s == "index" else ""}'
@@ -78,8 +86,12 @@ def page(slug: str, title: str, body: str) -> str:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Original generative audio for focus, stress downshift, and sleep. Every design decision cited to peer-reviewed research; weak evidence flagged as weak.">
+<meta name="description" content="{DESCRIPTION}">
+<meta property="og:title" content="{page_title}">
+<meta property="og:description" content="{DESCRIPTION}">
+<meta property="og:type" content="website">
 <title>{page_title}</title>
+<link rel="icon" href="{FAVICON}">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -142,9 +154,10 @@ including ours: <a href="protocol.html">test it</a>.</div>
 
 <h2>The formats</h2>
 <div class="cards">{cards}</div>
-<p class="fine">Each player is the first 90 seconds of an unedited engine render
-(seed 42), encoded to AAC for the browser. The masters these come from are listed
-with checksums in the <a href="provenance.html">provenance ledger</a>.</p>
+<p class="fine">Each player is the first 90 seconds of an engine render (seed 42)
+with a 3-second fade-out added, encoded to AAC for the browser. The masters these
+come from are listed with checksums in the
+<a href="provenance.html">provenance ledger</a>.</p>
 
 <h2>What the design rests on</h2>
 <p>Major claims are cited to peer-reviewed research, prioritizing systematic
@@ -173,11 +186,19 @@ this page will link to them when they exist, and not before.</p>
 """
 
 
+def _prov_cell(key: str, value: str) -> str:
+    if key == "sha256" and value:
+        return f'<td><code>{html.escape(value)}</code></td>'
+    if key == "url" and value:
+        return f'<td><a href="{html.escape(value)}">listen</a></td>'
+    return f"<td>{html.escape(value) if value else '&mdash;'}</td>"
+
+
 def build_provenance() -> str:
     rows = list(csv.DictReader(open(os.path.join(REPO, "manifest.csv"))))
     header = "".join(f"<th>{html.escape(h)}</th>" for h in rows[0].keys())
     body = "".join(
-        "<tr>" + "".join(f"<td>{html.escape(v)}</td>" for v in r.values()) + "</tr>"
+        "<tr>" + "".join(_prov_cell(k, v) for k, v in r.items()) + "</tr>"
         for r in rows
     )
     return f"""
@@ -187,8 +208,11 @@ to regenerate and verify it: recipe, seed, duration, engine version and commit,
 and the SHA-256 checksum of the exact file.</p>
 <p>Renders are deterministic. <code>python -m cognitionfm render --recipe
 &lt;recipe&gt; --duration &lt;duration&gt; --seed &lt;seed&gt;</code> at the listed
-engine commit reproduces the byte-identical audio (compare with
-<code>shasum -a 256</code>), and cover art derives from the same seed. This ledger
+engine commit regenerates the audio byte-for-byte on the same platform and
+library versions (compare with <code>shasum -a 256</code>); on different
+hardware, floating-point rounding can shift the checksum without audibly
+changing the mix, so the recipe, seed, and commit remain the canonical
+definition of each artifact. Cover art derives from the same seed. This ledger
 is the ownership record: nothing published samples, remixes, or launders anyone
 else's work. Status is <code>local-test</code> until an artifact is actually
 published, at which point its public URL is added. Rows marked

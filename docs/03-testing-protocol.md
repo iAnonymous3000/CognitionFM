@@ -63,6 +63,6 @@ For each playlist you want to validate:
 ## Engine A/B before publishing
 
 Before a recipe format ships publicly, it must at minimum **tie** a commercial
-reference playlist of the same category (docs/02-playlists.md lists equivalents)
-in your own two-week block. Publishing something that loses to a random Spotify
+reference playlist of the same category (the [playlist specs](02-playlists.md)
+list equivalents) in your own two-week block. Publishing something that loses to a random Spotify
 ambient playlist would violate the channel's honesty premise.

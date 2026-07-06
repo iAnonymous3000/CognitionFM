@@ -13,6 +13,7 @@ import subprocess
 import numpy as np
 import yaml
 
+from . import REPO_ROOT
 from .art import generate_art
 from .master.loudness import LufsMeter
 from .render import SR, iter_chunks
@@ -33,15 +34,17 @@ def _calibrate_gain_db(cfg: dict, seed: int, sample_s: float = 120.0) -> float:
 
 def _endless_chunks(cfg: dict, seed0: int, segment_s: float, crossfade_s: float):
     """Yield chunks forever: each segment gets seed0+k, and segment boundaries
-    are raised-cosine crossfades so the join is inaudible."""
+    are equal-power crossfades. Equal-power (sin/cos), not equal-gain: adjacent
+    segments are uncorrelated, so a linear-sum fade would dip ~3 dB mid-join."""
     if segment_s < 2 * crossfade_s:
         # the first-buffer wait below needs 2*crossfade of audio per segment;
         # shorter segments would buffer forever and never yield
         raise ValueError(
             f"segment ({segment_s:.0f}s) must be >= 2x crossfade ({crossfade_s:.0f}s)")
     xf_n = int(crossfade_s * SR)
-    fade_in = (0.5 - 0.5 * np.cos(np.pi * np.arange(xf_n) / xf_n))[:, None]
-    fade_out = fade_in[::-1]
+    theta = 0.5 * np.pi * np.arange(xf_n) / xf_n
+    fade_in = np.sin(theta)[:, None]
+    fade_out = np.cos(theta)[:, None]
     tail = None
     seed = seed0
     while True:
@@ -75,8 +78,7 @@ def stream(recipe_path: str, url: str, seed0: int = 1, segment_s: float = 1800.0
     name = os.path.splitext(os.path.basename(recipe_path))[0]
 
     gain = 10.0 ** (_calibrate_gain_db(cfg, seed0) / 20.0)
-    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    art_path = generate_art(name, seed0, os.path.join(repo_root, "art", f"stream-{name}.png"))
+    art_path = generate_art(name, seed0, os.path.join(REPO_ROOT, "art", f"stream-{name}.png"))
 
     is_rtmp = url.startswith(("rtmp://", "rtmps://"))
     cmd = [
@@ -95,7 +97,10 @@ def stream(recipe_path: str, url: str, seed0: int = 1, segment_s: float = 1800.0
         *(["-f", "flv"] if is_rtmp else []),
         url,
     ]
-    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
+    try:
+        proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
+    except FileNotFoundError:
+        raise RuntimeError("ffmpeg not found - install it (brew install ffmpeg)") from None
     max_samples = int(max_duration_s * SR) if max_duration_s else None
     written = 0
     try:

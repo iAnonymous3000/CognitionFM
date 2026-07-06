@@ -5,9 +5,9 @@ import glob
 import os
 import sys
 
+from . import REPO_ROOT
 from .render import parse_duration, render
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RECIPES_DIR = os.path.join(REPO_ROOT, "recipes")
 
 
@@ -124,7 +124,7 @@ def _dispatch(args):
         if not os.path.exists(wav):
             print(f"rendering {name} for {args.duration} (seed {args.seed}) first...")
             render(recipe_path, parse_duration(args.duration), args.seed, wav)
-        player = ["afplay", wav] if sys.platform == "darwin" else ["open", wav]
+        player = ["afplay", wav] if sys.platform == "darwin" else ["xdg-open", wav]
         print(f"playing {os.path.relpath(wav, REPO_ROOT)}  (ctrl-c stops)")
         try:
             subprocess.run(player)

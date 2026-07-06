@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cognitionfm"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Evidence-aware generative functional music engine: original long-form audio for focus, stress downshift, and sleep"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -24,6 +24,9 @@ dev = [
 
 [project.scripts]
 cognitionfm = "cognitionfm.cli:main"
+
+[tool.hatch.version]
+path = "cognitionfm/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["cognitionfm"]

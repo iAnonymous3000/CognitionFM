@@ -7,7 +7,7 @@ import subprocess
 
 import pytest
 
-from cognitionfm.art import generate_art
+from cognitionfm.art import _series_rng, generate_art
 from cognitionfm.render import MIN_RENDER_S, parse_duration, render
 from cognitionfm.stream import _endless_chunks, stream
 
@@ -49,6 +49,14 @@ def test_endless_chunks_rejects_hanging_config():
 def test_art_smoke(tmp_path):
     p = generate_art("downshift", 7, str(tmp_path / "a.png"))
     assert os.path.getsize(p) > 10_000  # a real image, not a stub
+
+
+def test_art_rng_distinct_for_same_length_names():
+    # regression: seeding by len(name) gave same-length series (sleep-wind-down
+    # vs morning-ramp-up) an identical composition for the same seed
+    a = _series_rng("sleep-wind-down", 42).random(8)
+    b = _series_rng("morning-ramp-up", 42).random(8)
+    assert not (a == b).all()
 
 
 @needs_ffmpeg

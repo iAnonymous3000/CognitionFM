@@ -25,7 +25,15 @@ FONT_CANDIDATES = [
     "/System/Library/Fonts/HelveticaNeue.ttc",
     "/System/Library/Fonts/Helvetica.ttc",
     "/System/Library/Fonts/SFNS.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",  # debian/ubuntu
+    "/usr/share/fonts/dejavu/DejaVuSans.ttf",           # fedora
 ]
+
+
+def _series_rng(recipe_name: str, seed: int) -> np.random.Generator:
+    """Seeded by the full name's bytes, not len(name): same-length series
+    (sleep-wind-down / morning-ramp-up) must not share a composition."""
+    return np.random.default_rng([seed, *recipe_name.encode()])
 
 
 def _font(size: int):
@@ -60,7 +68,7 @@ def _render_base(recipe_name: str, seed: int, size: tuple[int, int]) -> Image.Im
     accent = np.array(meta["accent"], dtype=np.float64)
     bg = np.array([13, 15, 19], dtype=np.float64)
 
-    rng = np.random.default_rng([seed, len(recipe_name)])
+    rng = _series_rng(recipe_name, seed)
     field = _smooth_field(rng, w, h) ** 1.8  # push toward dark; accent glows sparsely
 
     # radial vignette keeps edges calm and text readable

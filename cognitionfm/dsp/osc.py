@@ -3,11 +3,6 @@
 import numpy as np
 
 
-def sine(freq: float, n: int, sr: int, phase: float = 0.0) -> np.ndarray:
-    t = np.arange(n, dtype=np.float64) / sr
-    return np.sin(2.0 * np.pi * freq * t + phase)
-
-
 def partial_stack(
     freq: float,
     n: int,

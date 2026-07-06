@@ -25,9 +25,10 @@ Two constraints hold on any major platform and shape everything below:
      daily near-duplicates.
 2. **Provenance.** `manifest.csv` records recipe, seed, engine version and git
    commit, plus a SHA-256 checksum and publication status for every artifact.
-   Identical inputs regenerate byte-identical audio (verified in practice), which
-   is both our reproducibility promise and our ownership evidence if a dispute
-   ever arises.
+   Identical inputs regenerate byte-identical audio on the same platform and
+   library versions (verified in practice; floating-point rounding can shift
+   checksums across hardware), which is both our reproducibility promise and
+   our ownership evidence if a dispute ever arises.
 
 ## Formats (mapped to engine recipes)
 
@@ -113,6 +114,9 @@ Our positioning:
   renders 30-minute segments with incrementing seeds, crossfades the joins,
   applies calibrated LUFS gain, and pushes h264/AAC with 2-second keyframes.
   Test locally with `--url test.flv --max-duration 60s`.
+- **Chapters:** `python -m cognitionfm chapters --recipe X --duration 2h --seed N`
+  derives chapter marks from the harmonic walk, snapped to chord changes;
+  paste the output into release descriptions.
 - **Trust-anchor site:** `site/` (see README for build and deploy). Public pages:
   landing, evidence review, playlist specs, testing protocol, provenance ledger.
   This is the link every release description carries; this strategy doc stays
@@ -124,9 +128,6 @@ Our positioning:
    landing page with real destinations at first release.
 2. "Regenerate this exact mix yourself" as the community angle (needs the
    LICENSE decision). Local playback exists: `python -m cognitionfm play`.
-3. Done: chapter generation from the harmonic walk
-   (`python -m cognitionfm chapters --recipe X --duration 2h --seed N`);
-   paste the output into release descriptions.
-4. R2 (or equivalent) hosting for full-length mixes linked from the site.
-5. v2, only if releases show traction: in-browser generative player (Web Audio
+3. R2 (or equivalent) hosting for full-length mixes linked from the site.
+4. v2, only if releases show traction: in-browser generative player (Web Audio
    port of the engine), the Endel / generative.fm product direction.

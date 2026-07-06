@@ -39,8 +39,7 @@ def scale_pitches(root_midi: int, mode: str, low: int, high: int) -> list[int]:
 
 def triad_pitch_classes(root_midi: int, mode: str, degree: int) -> set[int]:
     degrees = SCALES[mode]
-    return {(root_midi + degrees[(degree + i) % 7] + 12 * ((degree + i) // 7)) % 12
-            for i in (0, 2, 4)}
+    return {(root_midi + degrees[(degree + i) % 7]) % 12 for i in (0, 2, 4)}
 
 
 def walk_chords(rng: np.random.Generator, n_chords: int, start: int = 0) -> list[int]:
