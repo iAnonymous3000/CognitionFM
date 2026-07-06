@@ -122,9 +122,11 @@ Our positioning:
 
 1. Pick the distribution platform(s); fill the placeholder links on the site
    landing page with real destinations at first release.
-2. Distribution hooks: a `play` command / tiny web player; "regenerate this
-   exact mix yourself" as the community angle.
-3. Chapter/timestamp generation from the harmonic walk (the engine knows where
-   the phase shifts are).
-4. v2, only if releases show traction: in-browser generative player (Web Audio
+2. "Regenerate this exact mix yourself" as the community angle (needs the
+   LICENSE decision). Local playback exists: `python -m cognitionfm play`.
+3. Done: chapter generation from the harmonic walk
+   (`python -m cognitionfm chapters --recipe X --duration 2h --seed N`);
+   paste the output into release descriptions.
+4. R2 (or equivalent) hosting for full-length mixes linked from the site.
+5. v2, only if releases show traction: in-browser generative player (Web Audio
    port of the engine), the Endel / generative.fm product direction.

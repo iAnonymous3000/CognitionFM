@@ -33,6 +33,13 @@ python3 -m venv .venv
 # endless generative live stream (RTMP; use a local .flv + --max-duration to test)
 .venv/bin/python -m cognitionfm stream --recipe deep-work-verbal --url rtmp://<ingest-host>/<key>
 
+# listen locally (renders once, then replays from cache) and log the session
+.venv/bin/python -m cognitionfm play --recipe deep-work-verbal --duration 25m
+.venv/bin/python -m cognitionfm log --playlist deep-work-verbal --condition A --focus 4 --state 4 --friction 5
+
+# chapter marks for a release description, snapped to chord changes
+.venv/bin/python -m cognitionfm chapters --recipe deep-work-verbal --duration 1h --seed 42
+
 # run tests
 .venv/bin/python -m pytest tests/
 ```

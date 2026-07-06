@@ -54,6 +54,26 @@ def main(argv=None):
     s.add_argument("--segment", default="30m", help="length of each generated segment")
     s.add_argument("--max-duration", default=None, help="stop after this long (testing); endless if omitted")
 
+    p = sub.add_parser("play", help="render (if not cached) and play a recipe locally")
+    p.add_argument("--recipe", required=True)
+    p.add_argument("--duration", default="25m", help="session length (default 25m)")
+    p.add_argument("--seed", type=int, default=1)
+
+    lg = sub.add_parser("log", help="append a session row to logs/listening-log.csv")
+    lg.add_argument("--playlist", required=True, help="e.g. deep-work-verbal, or a [PERSONAL] name")
+    lg.add_argument("--condition", required=True, help="A = playlist, B = control")
+    lg.add_argument("--focus", type=int, required=True, help="1-5: how often did you drift?")
+    lg.add_argument("--state", type=int, required=True, help="1-5: calm/energized as intended?")
+    lg.add_argument("--friction", type=int, required=True, help="1-5: want to switch it off?")
+    lg.add_argument("--anchor", default="", help="the playlist's objective-ish anchor value")
+    lg.add_argument("--notes", default="")
+
+    c = sub.add_parser("chapters", help="print chapter marks for a (recipe, duration, seed)")
+    c.add_argument("--recipe", required=True)
+    c.add_argument("--duration", required=True)
+    c.add_argument("--seed", type=int, default=1)
+    c.add_argument("--every", default="10m", help="target chapter spacing (default 10m)")
+
     args = ap.parse_args(argv)
     try:
         _dispatch(args)
@@ -94,6 +114,37 @@ def _dispatch(args):
         max_s = parse_duration(args.max_duration) if args.max_duration else None
         stream(resolve_recipe(args.recipe), args.url, seed0=args.seed,
                segment_s=parse_duration(args.segment), max_duration_s=max_s)
+        return
+    if args.cmd == "play":
+        import subprocess
+        recipe_path = resolve_recipe(args.recipe)
+        name = os.path.splitext(os.path.basename(recipe_path))[0]
+        wav = os.path.join(REPO_ROOT, "renders",
+                           f"{name}-{args.duration}-seed{args.seed}.wav")
+        if not os.path.exists(wav):
+            print(f"rendering {name} for {args.duration} (seed {args.seed}) first...")
+            render(recipe_path, parse_duration(args.duration), args.seed, wav)
+        player = ["afplay", wav] if sys.platform == "darwin" else ["open", wav]
+        print(f"playing {os.path.relpath(wav, REPO_ROOT)}  (ctrl-c stops)")
+        try:
+            subprocess.run(player)
+        except KeyboardInterrupt:
+            print("\nstopped. Log the session: python -m cognitionfm log "
+                  f"--playlist {name} --condition A --focus N --state N --friction N")
+        return
+    if args.cmd == "log":
+        from .sessionlog import append_session
+        row = append_session(
+            os.path.join(REPO_ROOT, "logs", "listening-log.csv"),
+            args.playlist, args.condition, args.focus, args.state,
+            args.friction, args.anchor, args.notes)
+        print(f"logged: {row}")
+        return
+    if args.cmd == "chapters":
+        from .chapters import format_chapters
+        print(format_chapters(resolve_recipe(args.recipe),
+                              parse_duration(args.duration), args.seed,
+                              every_s=parse_duration(args.every)))
         return
 
     recipe_path = resolve_recipe(args.recipe)

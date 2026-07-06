@@ -32,6 +32,16 @@ For each playlist you want to validate:
 5. **Log one line per session** in `logs/listening-log.csv`:
    `date,playlist,condition,focus,state,friction,anchor,notes`
 
+   One command does it (validates ranges, fills the date):
+
+   ```bash
+   .venv/bin/python -m cognitionfm log --playlist deep-work-verbal \
+       --condition A --focus 4 --state 4 --friction 5 --anchor 2
+   ```
+
+   And `python -m cognitionfm play --recipe deep-work-verbal --duration 25m`
+   renders (once) and plays a session-length mix locally.
+
 ## Decision rules (after ~2 weeks)
 
 - Playlist beats control on 2+ items → **keep**.
