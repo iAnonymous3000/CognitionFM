@@ -4,3 +4,8 @@ rendered,recipe,seed,duration,engine_version,engine_commit,lufs_target,sha256,ar
 2026-07-05,downshift,42,3m,0.1.0,b585403,-24,25c559fb3eb0c4a4ae0906bbf6f3d350e390689c8f9920847fc23ecd59ec9118,downshift-3m-seed42.wav,,local-test
 2026-07-05,sleep-wind-down,42,3m,0.1.0,b585403,-28,bfc8b61bc40c68afb85321bd2154a9c9603f59334537402a92365eddc9eed953,sleep-wind-down-3m-seed42.wav,,local-test
 2026-07-05,morning-ramp-up,42,2m,0.1.0,b585403,-19,0f6256401522ebe332efc02e596957c365edfb3154d20e4de079d2225f3d1732,morning-ramp-up-2m-seed42.wav,,local-test
+2026-07-05,deep-work-verbal,42,90s,0.1.0,b585403,-23,3466a4c9dd2c24d785b33f286103d425c861078403d565b599c5d483b876269f,audio/deep-work-verbal-seed42-90s.m4a,https://cognitionfm.pages.dev/audio/deep-work-verbal-seed42-90s.m4a,site-preview
+2026-07-05,deep-work-analytical,42,90s,0.1.0,b585403,-20,d8b40fb26ccaf89e4e8b5cfd17db96a25356d0b4c62985dad76597c068fe45a4,audio/deep-work-analytical-seed42-90s.m4a,https://cognitionfm.pages.dev/audio/deep-work-analytical-seed42-90s.m4a,site-preview
+2026-07-05,downshift,42,90s,0.1.0,b585403,-24,a04c016952b27b1be2c125a20cadd9d7544384d516141ccdf7ffc7510197f9ef,audio/downshift-seed42-90s.m4a,https://cognitionfm.pages.dev/audio/downshift-seed42-90s.m4a,site-preview
+2026-07-05,sleep-wind-down,42,90s,0.1.0,b585403,-28,e6b2f131d7ecdc36b02ea50236833b5dd1660674c513e4477dd7713500a25277,audio/sleep-wind-down-seed42-90s.m4a,https://cognitionfm.pages.dev/audio/sleep-wind-down-seed42-90s.m4a,site-preview
+2026-07-05,morning-ramp-up,42,90s,0.1.0,b585403,-19,b644e845ac60ded4b004db81da0813a88e9a028064ac949b622e99e23e5dbf26,audio/morning-ramp-up-seed42-90s.m4a,https://cognitionfm.pages.dev/audio/morning-ramp-up-seed42-90s.m4a,site-preview

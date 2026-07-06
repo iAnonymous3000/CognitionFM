@@ -1,4 +1,5 @@
 :root {
+  color-scheme: dark; /* native controls (audio players) render dark */
   --bg: #0d0f13;
   --panel: #14171d;
   --text: #d8dade;
@@ -107,6 +108,9 @@ blockquote { border-left: 3px solid var(--line); margin-left: 0; padding-left: 1
 }
 .card h3 { margin: 0 0 0.4rem; font-size: 1.02rem; }
 .card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.card audio { width: 100%; margin-top: 0.7rem; height: 36px; }
+
+p.fine { color: var(--muted); font-size: 0.85rem; }
 
 .notice {
   background: var(--panel);

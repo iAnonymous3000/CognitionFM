@@ -10,6 +10,7 @@ provenance ledger.
 """
 
 import csv
+import glob
 import html
 import os
 import re
@@ -32,13 +33,18 @@ PAGES = {  # doc filename -> (slug, nav title)
 NAV = [("index", "CognitionFM"), ("evidence", "Evidence"), ("playlists", "Playlists"),
        ("protocol", "Testing"), ("provenance", "Provenance")]
 
-SERIES_CARDS = [
-    ("verbal", "Deep Work - Verbal", "Writing, reading, hard debugging. No lyrics, no surprises."),
-    ("analytical", "Deep Work - Analytical", "Routine coding and flow work. One steady, soft pulse."),
-    ("downshift", "Downshift", "25 minutes of descending energy for stress downregulation."),
-    ("sleep", "Sleep Wind-Down", "Pre-bed routine audio that fades to near-silence."),
-    ("rampup", "Morning Ramp-Up", "A gentle arousal ramp into the day."),
+SERIES_CARDS = [  # (css var, title, description, recipe)
+    ("verbal", "Deep Work - Verbal", "Writing, reading, hard debugging. No lyrics, no surprises.", "deep-work-verbal"),
+    ("analytical", "Deep Work - Analytical", "Routine coding and flow work. One steady, soft pulse.", "deep-work-analytical"),
+    ("downshift", "Downshift", "25 minutes of descending energy for stress downregulation.", "downshift"),
+    ("sleep", "Sleep Wind-Down", "Pre-bed routine audio that fades to near-silence.", "sleep-wind-down"),
+    ("rampup", "Morning Ramp-Up", "A gentle arousal ramp into the day.", "morning-ramp-up"),
 ]
+
+
+def _preview_file(recipe: str) -> str | None:
+    hits = sorted(glob.glob(os.path.join(SITE, "audio", f"{recipe}-seed*-90s.m4a")))
+    return os.path.basename(hits[0]) if hits else None
 
 KEY_SOURCES = [
     ("Kämpfe, Sedlmeier & Renkewitz (2011), meta-analysis, Psychology of Music",
@@ -105,11 +111,15 @@ def convert_doc(md_name: str) -> str:
 
 
 def build_index() -> str:
-    cards = "".join(
-        f'<div class="card" style="border-top-color: var(--{var})">'
-        f"<h3>{html.escape(t)}</h3><p>{html.escape(d)}</p></div>"
-        for var, t, d in SERIES_CARDS
-    )
+    cards = ""
+    for var, t, d, recipe in SERIES_CARDS:
+        player = ""
+        fname = _preview_file(recipe)
+        if fname:
+            player = (f'<audio controls preload="none" '
+                      f'src="audio/{fname}" title="{html.escape(t)} preview"></audio>')
+        cards += (f'<div class="card" style="border-top-color: var(--{var})">'
+                  f"<h3>{html.escape(t)}</h3><p>{html.escape(d)}</p>{player}</div>")
     sources = "".join(
         f'<li><a href="{href}">{html.escape(name)}</a>: {html.escape(claim)}.</li>'
         for name, href, claim in KEY_SOURCES
@@ -132,6 +142,9 @@ including ours: <a href="protocol.html">test it</a>.</div>
 
 <h2>The formats</h2>
 <div class="cards">{cards}</div>
+<p class="fine">Each player is the first 90 seconds of an unedited engine render
+(seed 42), encoded to AAC for the browser. The masters these come from are listed
+with checksums in the <a href="provenance.html">provenance ledger</a>.</p>
 
 <h2>What the design rests on</h2>
 <p>Major claims are cited to peer-reviewed research, prioritizing systematic
@@ -154,9 +167,9 @@ commercial reference playlist in our own <a href="protocol.html">n-of-1 protocol
 </ul>
 
 <h2>Status</h2>
-<p>The engine, recipes, and documentation are complete and current. First public
-releases are in preparation; this page will link to them when they exist, and
-not before.</p>
+<p>The engine, recipes, and documentation are complete and current, and the
+90-second previews above are live. Full-length releases are in preparation;
+this page will link to them when they exist, and not before.</p>
 """
 
 
@@ -178,7 +191,10 @@ engine commit reproduces the byte-identical audio (compare with
 <code>shasum -a 256</code>), and cover art derives from the same seed. This ledger
 is the ownership record: nothing published samples, remixes, or launders anyone
 else's work. Status is <code>local-test</code> until an artifact is actually
-published, at which point its public URL is added.</p>
+published, at which point its public URL is added. Rows marked
+<code>site-preview</code> are the lossy AAC excerpts playable on the landing
+page, derived from the listed masters; their checksums cover the encoded file
+as served.</p>
 <table><thead><tr>{header}</tr></thead><tbody>{body}</tbody></table>
 """
 
